@@ -275,9 +275,10 @@ func (s *UsersService) ListVisibleAppsByResourceIDForUser(ctx context.Context, i
 //
 // https://developer.apple.com/documentation/appstoreconnectapi/add_visible_apps_to_a_user
 func (s *UsersService) AddVisibleAppsForUser(ctx context.Context, id string, appIDs []string) (*Response, error) {
+	url := fmt.Sprintf("users/%s/relationships/visibleApps", id)
 	linkages := newPagedRelationshipDeclaration(appIDs, "apps")
 
-	return s.client.post(ctx, "appStoreReviewDetails", newRequestBody(linkages.Data), nil)
+	return s.client.post(ctx, url, newRequestBody(linkages.Data), nil)
 }
 
 // UpdateVisibleAppsForUser replaces the list of apps a user on your team can see.
